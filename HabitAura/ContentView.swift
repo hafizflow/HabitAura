@@ -11,9 +11,13 @@ struct ContentView: View {
     @State private var habits = Habits()
     @State private var addHabit = false
     
+    @State private var showSheet = false
+    
     func delete(offSets: IndexSet) {
         habits.habits.remove(atOffsets: offSets)
     }
+    
+    @State private var searchText = ""
     
     var body: some View {
         NavigationStack {
@@ -22,7 +26,12 @@ struct ContentView: View {
                     NavigationLink {
                         DetailHabitView(habit: habit, habits: habits)
                     } label: {
-                        HabitView(habit: habit, habits: habits)
+                        VStack(spacing: 0) {
+                            if habit.id == habits.habits.first?.id {
+                                Color.clear.frame(height: 8)
+                            }
+                            HabitView(habit: habit, habits: habits)
+                        }
                     }
                     .buttonStyle(.plain)
                     .listRowSeparator(habit.id == habits.habits.first?.id ? .hidden : .visible, edges: .top)
@@ -38,11 +47,37 @@ struct ContentView: View {
                 }
                 .presentationDetents([.medium])
             }
+            .searchable(text: $searchText)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Add", systemImage: "plus") {
                         addHabit.toggle()
                     }
+                }
+                
+                ToolbarSpacer(.fixed)
+
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("alert", systemImage: "return") { showSheet = true }
+                        .alert("Title", isPresented: $showSheet) {
+                        }
+                        .alertContent(isPresented: showSheet) {
+                            VStack {
+                                TextField("Hafiz", text: $searchText)
+                                Text("Custom alert content")
+                                ProgressView()
+                            }
+                            .padding()
+                        }
+                }
+                
+                // My Practice
+                DefaultToolbarItem(kind: .search, placement: .bottomBar)
+                
+                ToolbarSpacer(placement: .bottomBar)
+                
+                ToolbarItem(placement: .bottomBar) {
+                    Button {} label: { Label("New", systemImage: "square.and.pencil") }
                 }
             }
             .toolbarTitleDisplayMode(.inlineLarge)
@@ -50,6 +85,7 @@ struct ContentView: View {
         }
     }
 }
+
 
 #Preview {
     ContentView()
