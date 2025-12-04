@@ -25,7 +25,7 @@ struct HabitView: View {
                         .contentTransition(.numericText())
                         .padding(.vertical, 6)
                         .padding(.horizontal, 12)
-                        .glassEffect(in: .rect(cornerRadius: 6.0))
+                        .glassEffect(.regular.tint(.orange.opacity(0.15)).interactive(), in: .rect(cornerRadius: 6.0))
                 }
                 
                 Text(habit.description)
