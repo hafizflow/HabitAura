@@ -59,16 +59,6 @@ struct ContentView: View {
 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("alert", systemImage: "return") { showSheet = true }
-                        .alert("Title", isPresented: $showSheet) {
-                        }
-                        .alertContent(isPresented: showSheet) {
-                            VStack {
-                                TextField("Hafiz", text: $searchText)
-                                Text("Custom alert content")
-                                ProgressView()
-                            }
-                            .padding()
-                        }
                 }
                 
                 // My Practice

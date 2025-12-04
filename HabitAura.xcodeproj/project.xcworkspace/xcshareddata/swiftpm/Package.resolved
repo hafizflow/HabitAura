@@ -1,0 +1,15 @@
+{
+  "originHash" : "834416999514ec20d344d58af7ad5b78491233fe1d9c4787bda871afbaf8fb38",
+  "pins" : [
+    {
+      "identity" : "swiftui-alert-advance",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/inekipelov/swiftui-alert-advance.git",
+      "state" : {
+        "revision" : "ac422acc259b0b28477c53a2bd86e1c1e15ae294",
+        "version" : "0.2.2"
+      }
+    }
+  ],
+  "version" : 3
+}

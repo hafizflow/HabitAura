@@ -11,7 +11,7 @@ import SwiftUI
 struct HabitAuraApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SpeedTrackerView()
         }
     }
 }
