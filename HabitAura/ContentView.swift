@@ -1,17 +1,10 @@
-//
-//  ContentView.swift
-//  HabitAura
-//
-//  Created by Hafizur Rahman on 3/12/25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.isSearching) private var isSearching
+    
     @State private var habits = Habits()
     @State private var addHabit = false
-    
-    @State private var showSheet = false
     
     func delete(offSets: IndexSet) {
         habits.habits.remove(atOffsets: offSets)
@@ -27,9 +20,6 @@ struct ContentView: View {
                         DetailHabitView(habit: habit, habits: habits)
                     } label: {
                         VStack(spacing: 0) {
-                            if habit.id == habits.habits.first?.id {
-                                Color.clear.frame(height: 8)
-                            }
                             HabitView(habit: habit, habits: habits)
                         }
                     }
@@ -38,6 +28,7 @@ struct ContentView: View {
                 }
                 .onDelete(perform: delete)
             }
+            .navigationLinkIndicatorVisibility(.hidden)
             .listStyle(.plain)
             .navigationTitle("HabitAura")
             .navigationSubtitle("Track Your Daily Habits")
@@ -48,17 +39,19 @@ struct ContentView: View {
                 .presentationDetents([.medium])
             }
             .searchable(text: $searchText)
+            .onChange(of: isSearching) { _, newValue in
+                print(newValue ? "Search active" : "Search inactive")
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Add", systemImage: "plus") {
                         addHabit.toggle()
                     }
                 }
-                
-                ToolbarSpacer(.fixed)
-
+                ToolbarSpacer(placement: .topBarTrailing)
+                    
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button("alert", systemImage: "return") { showSheet = true }
+                    Text(.now, style: .time).padding()
                 }
                 
                 // My Practice
@@ -66,8 +59,10 @@ struct ContentView: View {
                 
                 ToolbarSpacer(placement: .bottomBar)
                 
-                ToolbarItem(placement: .bottomBar) {
-                    Button {} label: { Label("New", systemImage: "square.and.pencil") }
+                if isSearching {
+                    ToolbarItem(placement: .bottomBar) {
+                        Button {} label: { Label("New", systemImage: "square.and.pencil") }
+                    }
                 }
             }
             .toolbarTitleDisplayMode(.inlineLarge)

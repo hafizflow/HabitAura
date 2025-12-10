@@ -13,7 +13,13 @@ struct Practice: View {
     
     var body: some View {
         VStack {
-            Text(String(num)).font(.title).contentTransition(.numericText())
+            HStack {
+                Text(Image(systemName: "heart.fill"))
+                    .foregroundStyle(.red.gradient)
+                
+                
+                Text(String(num)).font(.title).contentTransition(.numericText())
+            }
             Button("Add") {
                 withAnimation {
                     num += 1
@@ -75,5 +81,5 @@ struct AlertView: View {
 }
 
 #Preview {
-    AlertView()
+    Practice()
 }
